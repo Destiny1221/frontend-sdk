@@ -17,10 +17,10 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "src/**/*.{less,scss,css,json,md}": [
+    "*.{less,scss,css,json,md}": [
       "prettier --write"
     ],
-    "src/**/*.{js,ts,jsx}": [
+    "*.{js,ts,jsx}": [
       "eslint --fix",
       "prettier --write"
     ]

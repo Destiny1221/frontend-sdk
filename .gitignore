@@ -3,5 +3,4 @@ node_modules
 dist
 .vscode
 .idea
-CHANGELOG.md
 *-lock.json
