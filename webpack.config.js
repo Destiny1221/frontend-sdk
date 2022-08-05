@@ -2,7 +2,7 @@
  * @Author: yuzy
  * @Date: 2022-08-03 11:12:14
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-04 17:43:32
+ * @LastEditTime: 2022-08-05 16:04:53
  * @Description:
  */
 const path = require('path');
@@ -15,6 +15,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundles.js',
+  },
+  resolve: {
+    extensions: ['*', '.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@/lib': path.resolve(__dirname, 'src/lib'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({

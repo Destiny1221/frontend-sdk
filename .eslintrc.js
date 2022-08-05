@@ -16,5 +16,7 @@ module.exports = {
     'no-debugger': isDev ? 'off' : 'error',
     'no-console': isDev ? 'off' : 'error', // 开发环境允许console，代码提交不允许
     quotes: ['error', 'single'], // 如果不是单引号，则报错
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
   },
 };
