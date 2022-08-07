@@ -2,7 +2,7 @@
  * @Author: yuzy
  * @Date: 2022-08-05 16:49:19
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-05 17:37:11
+ * @LastEditTime: 2022-08-07 18:23:26
  * @Description:
  */
 export enum ErrorType {
@@ -23,6 +23,13 @@ export interface ResourceError extends BaseError {
 }
 
 export interface JsError extends BaseError {
+  filename: string;
+  message: string;
+  position: string;
+  stack: string;
+}
+
+export interface UnhandlePromiseError extends BaseError {
   filename: string;
   message: string;
   position: string;
