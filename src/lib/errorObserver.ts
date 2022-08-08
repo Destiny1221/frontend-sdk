@@ -2,16 +2,16 @@
  * @Author: yuzy
  * @Date: 2022-08-05 14:15:47
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-05 17:48:42
+ * @LastEditTime: 2022-08-08 17:25:11
  * @Description: 监控js错误以及资源加载错误
  */
-import { ErrorType } from '@/types/index';
+import { ErrorType, InitOptions } from '@/types/index';
 import { getStackLines } from '@/utils/index';
 import { BaseError } from './baseErrorObserver';
 
 export class ErrorObserver extends BaseError {
-  constructor() {
-    super();
+  constructor(options: Partial<InitOptions>) {
+    super(options);
     this.init();
   }
   private init() {
@@ -27,7 +27,9 @@ export class ErrorObserver extends BaseError {
             tagName: (target as any).tagName, // 报错标签
             filename: (target as any).src || (target as any).href,
           };
-          this.reportError(resourceError);
+          if (this.options.sendResource) {
+            this.reportError(resourceError);
+          }
         } else {
           // js错误
           const resourceError = {
@@ -37,7 +39,9 @@ export class ErrorObserver extends BaseError {
             position: `${event.lineno}:${event.colno}`, // 报错位置 行：列
             stack: getStackLines(event.error.stack),
           };
-          this.reportError(resourceError);
+          if (this.options.sendError) {
+            this.reportError(resourceError);
+          }
         }
       },
       true,

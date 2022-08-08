@@ -2,7 +2,7 @@
  * @Author: yuzy
  * @Date: 2022-08-03 11:12:14
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-07 17:57:00
+ * @LastEditTime: 2022-08-08 15:47:49
  * @Description:
  */
 const path = require('path');
@@ -12,6 +12,7 @@ module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, 'src/index.ts'),
   output: {
+    clean: true,
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     library: {

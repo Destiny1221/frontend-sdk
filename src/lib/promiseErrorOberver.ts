@@ -2,16 +2,16 @@
  * @Author: yuzy
  * @Date: 2022-08-05 17:48:25
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-07 18:43:25
+ * @LastEditTime: 2022-08-08 17:22:58
  * @Description: promise异常
  */
-import { ErrorType } from '@/types/index';
+import { ErrorType, InitOptions } from '@/types/index';
 import { getStackLines } from '@/utils/index';
 import { BaseError } from './baseErrorObserver';
 
 export class PromiseErrorObserver extends BaseError {
-  constructor() {
-    super();
+  constructor(options: Partial<InitOptions>) {
+    super(options);
     this.init();
   }
   private init() {
@@ -31,9 +31,11 @@ export class PromiseErrorObserver extends BaseError {
           message = reason.message;
           if (reason.stack) {
             const matchResult = reason.stack.match(/at\s+(.+):(\d+):(\d+)/);
-            filename = matchResult[1];
-            line = matchResult[2];
-            column = matchResult[3];
+            if (matchResult) {
+              filename = matchResult[1];
+              line = matchResult[2];
+              column = matchResult[3];
+            }
             stack = getStackLines(reason.stack);
           }
         }

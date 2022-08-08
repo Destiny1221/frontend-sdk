@@ -18,5 +18,7 @@ module.exports = {
     quotes: ['error', 'single'], // 如果不是单引号，则报错
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    'prefer-rest-params': 'off',
+    '@typescript-eslint/no-this-alias': 'off',
   },
 };
