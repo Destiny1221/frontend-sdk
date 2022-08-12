@@ -2,7 +2,7 @@
  * @Author: yuzy
  * @Date: 2022-08-11 17:39:55
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-12 16:48:57
+ * @LastEditTime: 2022-08-12 17:15:25
  * @Description: 错误异常监控
  */
 import { ErrorType, HandlerParams, InitOptionsTyping } from '@/types/index';
@@ -11,7 +11,7 @@ import { getStackLines, getErrorKey, getErrorUid } from '@/utils/index';
 import { BaseObserver } from '@/lib/core/baseObserver';
 
 // 错误类型
-export enum MechanismType {
+export enum MonitorErrorType {
   JS = 'js',
   RS = 'resource',
   UJ = 'unhandledrejection',
@@ -48,11 +48,11 @@ export class ErrorObserver extends BaseObserver {
       // 阻止向上抛出控制台报错
       event.preventDefault();
       // 如果不是JS异常 就结束
-      if (getErrorKey(event) !== MechanismType.JS) return;
+      if (getErrorKey(event) !== MonitorErrorType.JS) return;
       const resourceError = {
         errorType: ErrorType.JsError,
         type: event.error.name || 'Unknown',
-        errorUid: getErrorUid(`${MechanismType.JS}-${event.message}-${event.filename}`),
+        errorUid: getErrorUid(`${MonitorErrorType.JS}-${event.message}-${event.filename}`),
         message: event.message, // 报错信息
         filename: event.filename, // 报错文件
         position: `${event.lineno}:${event.colno}`, // 报错位置 行：列
@@ -68,13 +68,13 @@ export class ErrorObserver extends BaseObserver {
       // 阻止向上抛出控制台报错
       event.preventDefault();
       // 如果不是静态异常就结束
-      if (getErrorKey(event) !== MechanismType.RS) return;
+      if (getErrorKey(event) !== MonitorErrorType.RS) return;
       const target = event.target as ResourceErrorTarget;
       const resourceError = {
         errorType: ErrorType.ResourceError,
         url: target.src || target.href, //报错文件
         type: target.tagName, //报错标签
-        errorUid: getErrorUid(`${MechanismType.RS}-${target.src || target.href}-${target.tagName}`),
+        errorUid: getErrorUid(`${MonitorErrorType.RS}-${target.src || target.href}-${target.tagName}`),
       };
       window.console.log(resourceError);
     };
@@ -143,14 +143,14 @@ export class ErrorObserver extends BaseObserver {
       // 阻止向上抛出控制台报错
       event.preventDefault();
       // 如果不是跨域脚本异常,就结束
-      if (getErrorKey(event) !== MechanismType.CS) return;
+      if (getErrorKey(event) !== MonitorErrorType.CS) return;
       const exception = {
         // 上报错误归类
-        type: MechanismType.CS,
+        type: MonitorErrorType.CS,
         // 错误信息
         value: event.message,
         // 错误的标识码
-        errorUid: getErrorUid(`${MechanismType.CS}-${event.message}`),
+        errorUid: getErrorUid(`${MonitorErrorType.CS}-${event.message}`),
       };
       // 自行上报异常，也可以跨域脚本的异常都不上报;
       window.console.log(exception);

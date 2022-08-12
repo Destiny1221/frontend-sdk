@@ -2,10 +2,10 @@
  * @Author: yuzy
  * @Date: 2022-08-05 14:28:55
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-11 18:29:16
+ * @LastEditTime: 2022-08-12 17:15:38
  * @Description:
  */
-import { MechanismType } from '@/lib/error';
+import { MonitorErrorType } from '@/lib/error';
 
 export const getStackLines = (stack: string) => {
   return stack
@@ -30,8 +30,8 @@ export const serilizeUrl = (url: string) => {
 // 判断是 JS异常、静态资源异常、还是跨域异常
 export const getErrorKey = (event: ErrorEvent | Event) => {
   const isJsError = event instanceof ErrorEvent;
-  if (!isJsError) return MechanismType.RS;
-  return event.message === 'Script error.' ? MechanismType.CS : MechanismType.JS;
+  if (!isJsError) return MonitorErrorType.RS;
+  return event.message === 'Script error.' ? MonitorErrorType.CS : MonitorErrorType.JS;
 };
 
 // 对每一个错误详情，生成一串编码
