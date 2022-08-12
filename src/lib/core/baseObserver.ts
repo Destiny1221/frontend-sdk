@@ -2,14 +2,14 @@
  * @Author: yuzy
  * @Date: 2022-08-05 14:16:31
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-08 17:20:44
+ * @LastEditTime: 2022-08-12 14:52:56
  * @Description:
  */
-import type { ResourceError, JsError, UnhandlePromiseError, XhrObserver, InitOptions } from '@/types/index';
+import type { ResourceError, JsError, UnhandlePromiseError, XhrObserver, InitOptionsTyping } from '@/types/index';
 type Message = ResourceError | JsError | UnhandlePromiseError | XhrObserver;
-export class BaseError {
-  public options: Partial<InitOptions>;
-  constructor(options: Partial<InitOptions>) {
+export class BaseObserver {
+  public options: Partial<InitOptionsTyping>;
+  constructor(options: Partial<InitOptionsTyping>) {
     this.options = options;
   }
   reportError(message: Message) {

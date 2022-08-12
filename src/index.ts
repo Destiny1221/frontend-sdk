@@ -2,18 +2,17 @@
  * @Author: yuzy
  * @Date: 2022-08-03 11:22:12
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-08 17:34:23
+ * @LastEditTime: 2022-08-12 16:48:06
  * @Description:
  */
-import { ErrorObserver } from '@/lib/errorObserver';
-import { PromiseErrorObserver } from '@/lib/promiseErrorOberver';
-import { AjaxInterceptorObserver } from '@/lib/ajaxInterceptorObserver';
-import { InitOptions } from '@/types/index';
+import './example.js';
+import { ErrorObserver } from '@/lib/error';
+import { InitOptionsTyping } from '@/types/index';
 import { initOptions } from './options';
 export class Monitor {
   public static instance: Monitor;
-  public options: Partial<InitOptions>;
-  constructor(options: Partial<InitOptions> = {}) {
+  public options: Partial<InitOptionsTyping>;
+  constructor(options: Partial<InitOptionsTyping> = {}) {
     this.options = Object.assign(initOptions, options);
     this.initObserver();
   }
@@ -21,7 +20,7 @@ export class Monitor {
    * @description: 初始化Monitor实例，单例模式
    * @return {*}
    */
-  static init(options: Partial<InitOptions>) {
+  static init(options: Partial<InitOptionsTyping>) {
     if (!this.instance) {
       this.instance = new Monitor(options);
     }
@@ -32,14 +31,8 @@ export class Monitor {
    * @return {*}
    */
   initObserver() {
-    if (this.options.sendError || this.options.sendResource) {
-      new ErrorObserver(this.options);
-    }
-    if (this.options.sendPromise) {
-      new PromiseErrorObserver(this.options);
-    }
-    if (this.options.sendApi) {
-      new AjaxInterceptorObserver(this.options);
-    }
+    new ErrorObserver(this.options);
   }
 }
+
+new Monitor();

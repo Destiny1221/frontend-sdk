@@ -2,7 +2,7 @@
  * @Author: yuzy
  * @Date: 2022-08-05 16:49:19
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-08 17:18:53
+ * @LastEditTime: 2022-08-12 14:52:33
  * @Description:
  */
 export enum ErrorType {
@@ -11,7 +11,7 @@ export enum ErrorType {
   ResourceError = 'resourceError',
   AjaxRequestError = 'xhr',
 }
-export interface InitOptions {
+export interface InitOptionsTyping {
   // 是否上报js错误
   sendError: boolean;
   sendPV: boolean; // 是否上报页面 PV
