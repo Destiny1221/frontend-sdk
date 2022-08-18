@@ -2,10 +2,9 @@
  * @Author: yuzy
  * @Date: 2022-08-03 11:22:12
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-12 17:41:17
+ * @LastEditTime: 2022-08-18 16:11:47
  * @Description:
  */
-import './example.js';
 import { ErrorObserver } from '@/lib/error';
 import { UserBehaviorObserver } from '@/lib/behavior';
 import { InitOptionsTyping } from '@/types/index';
@@ -36,5 +35,3 @@ export class Monitor {
     new UserBehaviorObserver();
   }
 }
-
-new Monitor();

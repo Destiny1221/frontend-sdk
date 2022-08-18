@@ -2,9 +2,12 @@
  * @Author: yuzy
  * @Date: 2022-08-11 17:10:56
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-11 17:32:45
+ * @LastEditTime: 2022-08-18 16:13:22
  * @Description:
  */
+import { Monitor } from '../src/index';
+
+new Monitor();
 document.getElementById('errorBtn').onclick = () => {
   const script = document.createElement('script');
   script.type = 'text/javascript';
