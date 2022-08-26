@@ -2,10 +2,11 @@
  * @Author: yuzy
  * @Date: 2022-08-11 17:10:56
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-18 16:13:22
+ * @LastEditTime: 2022-08-18 16:45:40
  * @Description:
  */
 import { Monitor } from '../src/index';
+import { getList } from './request';
 
 new Monitor();
 document.getElementById('errorBtn').onclick = () => {
@@ -40,4 +41,8 @@ document.getElementById('errorPromiseBtn').onclick = () => {
     });
   };
   fn();
+};
+
+document.getElementById('xhrBtn').onclick = () => {
+  getList();
 };
