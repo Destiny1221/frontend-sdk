@@ -2,11 +2,12 @@
  * @Author: yuzy
  * @Date: 2022-08-03 11:22:12
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-18 16:11:47
+ * @LastEditTime: 2022-08-29 16:09:21
  * @Description:
  */
 import { ErrorObserver } from '@/lib/error';
 import { UserBehaviorObserver } from '@/lib/behavior';
+import { WebVitals } from '@/lib/performance';
 import { InitOptionsTyping } from '@/types/index';
 import { initOptions } from './options';
 export class Monitor {
@@ -33,5 +34,6 @@ export class Monitor {
   initObserver() {
     new ErrorObserver(this.options);
     new UserBehaviorObserver();
+    new WebVitals();
   }
 }

@@ -1,3 +1,10 @@
+/*
+ * @Author: yuzy
+ * @Date: 2022-08-05 18:23:57
+ * @LastEditors: yuzy
+ * @LastEditTime: 2022-08-30 14:53:10
+ * @Description:
+ */
 const isDev = process.env.NODE_ENV === 'development';
 module.exports = {
   env: {
@@ -14,7 +21,7 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'no-debugger': isDev ? 'off' : 'error',
-    'no-console': isDev ? 'off' : 'error', // 开发环境允许console，代码提交不允许
+    'no-console': 'off', // 开发环境允许console，代码提交不允许
     quotes: ['error', 'single'], // 如果不是单引号，则报错
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',

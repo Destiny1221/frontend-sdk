@@ -2,11 +2,18 @@
  * @Author: yuzy
  * @Date: 2022-08-11 17:10:56
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-18 16:45:40
+ * @LastEditTime: 2022-08-30 11:12:10
  * @Description:
  */
 import { Monitor } from '../src/index';
 import { getList } from './request';
+
+var tag = 'console开始展开';
+console.groupCollapsed(tag);
+console.log(1);
+console.log(1);
+console.log(1);
+console.groupEnd();
 
 new Monitor();
 document.getElementById('errorBtn').onclick = () => {

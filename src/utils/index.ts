@@ -2,7 +2,7 @@
  * @Author: yuzy
  * @Date: 2022-08-05 14:28:55
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-26 11:00:53
+ * @LastEditTime: 2022-08-30 14:51:33
  * @Description:
  */
 import { MonitorErrorType } from '@/lib/error';
@@ -22,6 +22,25 @@ export interface httpMetrics {
 export interface OriginInformation {
   referrer: string;
   type: number | string;
+}
+
+export interface MPerformanceNavigationTiming {
+  FP?: number;
+  TTI?: number;
+  DomReady?: number;
+  Load?: number;
+  FirstByte?: number;
+  DNS?: number;
+  TCP?: number;
+  SSL?: number;
+  TTFB?: number;
+  Trans?: number;
+  DomParse?: number;
+  Res?: number;
+}
+
+export interface PerformanceEntryHandler {
+  (entry: any): void;
 }
 
 export const getStackLines = (stack: string) => {
@@ -205,3 +224,179 @@ export const proxyFetch = (sendHandler: typeof Function | null | undefined, load
     };
   }
 };
+
+// 页面渲染之后的回调，用于性能监控
+export const afterLoad = (callback: any) => {
+  if (document.readyState === 'complete') {
+    setTimeout(callback);
+  } else {
+    window.addEventListener('pageshow', callback, { once: true, capture: true });
+  }
+};
+
+/**
+ *
+ * @param type
+ * @param callback
+ * @returns
+ * 性能监控，使用new PerformanceObserver().observe API实现对特定性能指标的监控
+ * type：监控某项想能指标
+ * entryTypes:Array 监控传入需要监控的性能指标
+ */
+export const observe = (type: string, callback: PerformanceEntryHandler): void => {
+  // 类型合规，就返回 observe
+  if (PerformanceObserver.supportedEntryTypes?.includes(type)) {
+    new PerformanceObserver((entryList, observer) => {
+      entryList.getEntries().map(callback);
+      observer.disconnect(); // 不需要再观察了
+    }).observe({ type, buffered: true });
+  }
+};
+
+/**
+ * FP:页面视觉首次发生变化的时间点,FP不包含默认背景绘制
+ * @param cb
+ */
+export const getFP = (cb: PerformanceEntryHandler): void => {
+  // 方法一
+  observe('paint', (entry: PerformanceEntry) => {
+    if (entry.name === 'first-paint') {
+      typeof cb === 'function' &&
+        cb({
+          type: 'FP',
+          entry,
+        });
+    }
+  });
+  // 方法二
+  // const [entry] = performance.getEntriesByName('first-paint')
+};
+
+/**
+ * FCP:首次绘制任何文本、图像、非空白canvas或者SVG的时间点
+ * 与FP的区别：
+ *    1、FCP是首次绘制来自DOM的有效内容的时间点，所以FP可能等于FCP，也可能先于FCP。
+ * 比如当我们给body增加背景色时，FP就是记录开始绘制背景色的时间点，FCP则是在body生成之后，首次绘制DOM的有效内容的时间点
+ * @param cb
+ */
+export const getFCP = (cb: PerformanceEntryHandler): void => {
+  // 方法一
+  observe('paint', (entry: PerformanceEntry) => {
+    if (entry.name === 'first-contentful-paint') {
+      typeof cb === 'function' &&
+        cb({
+          type: 'FCP',
+          entry,
+        });
+    }
+  });
+  // 方法二
+  // const [entry] = performance.getEntriesByName('first-contentful-paint')
+};
+
+/**
+ * FMP(首次有效绘制):首屏时间，通过FCP的介绍我们可能认为FMP就是首屏时间，其实不是，FMP是首次绘制任何文本，按照这种逻辑客户端
+ * 渲染了一个字的时间点就是首屏时间了。FMP可以定义为页面渲染过程中元素增量最大的点的时间段，一般就是首屏时间所在的
+ * 时间点。W3C已经将首屏统计进入了提议阶段。
+ *
+ * TODO:本方法经测试失效，还需要重新寻找新方法。
+ * @param cb
+ */
+export const getFMP = (cb: PerformanceEntryHandler): void => {
+  observe('element', (entry: PerformanceEntry) => {
+    cb(entry);
+  });
+};
+
+/**
+ * 页面首次开始加载的时间点，到可视区域最大的图像或文本块完成渲染的相对事件，可以测试用户主管感知到的页面的加载速度，因为
+ * 最大内容绘制完成时，往往认为页面将要加载完成。
+ * @param cb
+ */
+export const getLCP = (cb: PerformanceEntryHandler): void => {
+  observe('largest-contentful-paint', (entry: PerformanceEntry) => {
+    cb(entry);
+  });
+};
+
+/**
+ * FID:用户第一次与页面交互(点击链接、或者按钮时)直到浏览器对交互做出相应
+ * @param cb
+ */
+export const getFID = (cb: PerformanceEntryHandler): void => {
+  observe('first-input', (entry: PerformanceEntry) => {
+    cb(entry);
+  });
+};
+
+/**
+ * CLS:测量整个页面声明周期内发生的所有意外布局偏移中最大的布局偏移分数，每当一个已渲染的元素的可见位置变更
+ * 到下一个可见位置时，就发生布局偏移
+ * @param cb
+ */
+export const getCLS = (cb: PerformanceEntryHandler): void => {
+  observe('layout-shift', (entry: PerformanceEntry) => {
+    cb(entry);
+  });
+};
+
+// 获取一个页面的关键时间点以及时间段的数据
+export const getNavigationTiming = (): MPerformanceNavigationTiming | undefined => {
+  const resolveNavigationTiming = (entry: PerformanceNavigationTiming): MPerformanceNavigationTiming => {
+    const {
+      domainLookupStart,
+      domainLookupEnd,
+      connectStart,
+      connectEnd,
+      secureConnectionStart,
+      requestStart,
+      responseStart,
+      responseEnd,
+      domInteractive,
+      domContentLoadedEventEnd,
+      loadEventStart,
+      fetchStart,
+    } = entry;
+
+    return {
+      // 关键时间点
+      FP: responseEnd - fetchStart, //白屏时间：从请求开始到浏览器开始解析第一批HTML文档字节的时间
+      TTI: domInteractive - fetchStart, //首次可交互时间：浏览器完成所有HTML解析并且完成DOM构建，此时浏览器开始加载资源。
+      DomReady: domContentLoadedEventEnd - fetchStart, //HTML加载完成时间：单页面客户端渲染下，为生成模板dom树所花费时间；非单页面或单页面服务端渲染下，为生成实际dom树所花费时间
+      Load: loadEventStart - fetchStart, //页面完全加载时间：Load=首次渲染时间+DOM解析耗时+同步JS执行+资源加载耗时
+      FirstByte: responseStart - domainLookupStart, //首包时间：从DNS解析到响应返回给浏览器第一个字节的时间
+      // 关键时间段
+      DNS: domainLookupEnd - domainLookupStart, //DNS查询耗时
+      TCP: connectEnd - connectStart, //TCP连接耗时
+      SSL: secureConnectionStart ? connectEnd - secureConnectionStart : 0, //SSL安全连接耗时
+      TTFB: responseStart - requestStart, //请求响应耗时
+      Trans: responseEnd - responseStart, //内容传输耗时
+      DomParse: domInteractive - responseEnd, //DOM解析耗时
+      Res: loadEventStart - domContentLoadedEventEnd, //资源加载耗时（页面同步加载的资源）
+    };
+  };
+
+  const navigation =
+    // W3C Level2  PerformanceNavigationTiming
+    // 使用了High-Resolution Time，时间精度可以达毫秒的小数点好几位。
+    performance.getEntriesByType('navigation').length > 0
+      ? performance.getEntriesByType('navigation')[0]
+      : performance.timing; // W3C Level1  (目前兼容性高，仍然可使用，未来可能被废弃)。
+  return resolveNavigationTiming(navigation as PerformanceNavigationTiming);
+};
+
+/**
+ * 监听页面卡顿，通过entry.duration > 100 判断大于100ms，即可认定为长任务
+ * 使用requestIdleCallback上报数据
+ */
+export function longTask() {
+  new PerformanceObserver((list) => {
+    list.getEntries().forEach((entry) => {
+      if (entry.duration > 100) {
+        requestIdleCallback(() => {
+          window.console.log(entry);
+        });
+      }
+    });
+  }).observe({ entryTypes: ['longtask'] });
+}
