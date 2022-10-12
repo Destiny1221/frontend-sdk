@@ -2,11 +2,13 @@
  * @Author: yuzy
  * @Date: 2022-08-11 17:10:56
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-30 11:12:10
+ * @LastEditTime: 2022-09-07 17:05:01
  * @Description:
  */
 import { Monitor } from '../src/index';
 import { getList } from './request';
+import _ from 'lodash';
+import './style/index.scss';
 
 var tag = 'console开始展开';
 console.groupCollapsed(tag);
@@ -14,6 +16,8 @@ console.log(1);
 console.log(1);
 console.log(1);
 console.groupEnd();
+
+console.log(_.uniq([1, 1, 1, 3]));
 
 new Monitor();
 document.getElementById('errorBtn').onclick = () => {

@@ -2,11 +2,12 @@
  * @Author: yuzy
  * @Date: 2022-08-18 15:49:46
  * @LastEditors: yuzy
- * @LastEditTime: 2022-08-18 16:14:44
+ * @LastEditTime: 2022-09-07 17:15:50
  * @Description:
  */
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   resolve: {
@@ -29,9 +30,22 @@ module.exports = {
     rules: [
       {
         test: /.ts$/,
-        use: ['babel-loader', 'ts-loader'],
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          }
+        }, 'ts-loader'],
         exclude: /node_modules/,
-      },
+      }
     ],
   },
+  plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled',  // 不启动展示打包报告的http服务器，默认值为server启动http服务器
+      analyzerHost: '127.0.0.1', // 服务器启动地址
+      analyzerPort: 8888, // 端口号
+      generateStatsFile: true, // 是否生成stats.json文件
+    }),
+  ],
 };

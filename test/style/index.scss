@@ -1,0 +1,22 @@
+.title {
+  line-height: 30px;
+  text-align: center;
+}
+
+.trans {
+  transform: translateX(-50%);
+}
+
+.resource {
+  .custom-container {
+    display: inline-block;
+  }
+  .content {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    background-image: url('../../public/logo.png');
+    background-size: contain;
+  }
+}
