@@ -55,3 +55,38 @@ export interface XhrObserver extends BaseError {
   queryParams: string;
   bodyParams: any;
 }
+
+export enum EVENTTYPES {
+  XHR = 'xhr',
+  FETCH = 'fetch',
+  CLICK = 'click',
+  HISTORY = 'history',
+  ERROR = 'error',
+  HASHCHANGE = 'hashchange',
+  UNHANDLEDREJECTION = 'unhandledrejection',
+  RESOURCE = 'resource',
+  DOM = 'dom',
+  VUE = 'vue',
+  REACT = 'react',
+  CUSTOM = 'custom',
+  PERFORMANCE = 'performance',
+  RECORDSCREEN = 'recordScreen',
+  WHITESCREEN = 'whiteScreen',
+}
+
+export interface Callback {
+  (...args: any[]): any;
+}
+
+export interface ReplaceHandler {
+  type: EVENTTYPES;
+  callback: Callback;
+}
+
+export type voidFun = (...args: any[]) => void;
+
+export type ReplaceCallback = (data: any) => void;
+
+export interface IAnyObject {
+  [key: string]: any;
+}

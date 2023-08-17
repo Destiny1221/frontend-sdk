@@ -6,16 +6,18 @@
  * @Description:
  */
 import { ErrorObserver } from '@/lib/error';
-import { UserBehaviorObserver } from '@/lib/behavior';
-import { WebVitals } from '@/lib/performance';
+// import { UserBehaviorObserver } from '@/lib/behavior';
+// import { WebVitals } from '@/lib/performance';
 import { InitOptionsTyping } from '@/types/index';
 import { initOptions } from './options';
+import { setupReplace } from '@/lib/core/setupReplace';
 export class Monitor {
   public static instance: Monitor;
   public options: Partial<InitOptionsTyping>;
   constructor(options: Partial<InitOptionsTyping> = {}) {
     this.options = Object.assign(initOptions, options);
-    this.initObserver();
+    // this.initObserver();
+    setupReplace();
   }
   /**
    * @description: 初始化Monitor实例，单例模式
@@ -33,7 +35,7 @@ export class Monitor {
    */
   initObserver() {
     new ErrorObserver(this.options);
-    new UserBehaviorObserver();
-    new WebVitals();
+    // new UserBehaviorObserver();
+    // new WebVitals();
   }
 }
