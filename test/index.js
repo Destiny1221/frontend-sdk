@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-08-30 11:12:10
  * @Description:
  */
-import { Monitor } from '../src/index';
+import { Monitor } from '../packages/core/src/index';
 import { getList } from './request';
 
 var tag = 'console开始展开';

@@ -14,6 +14,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@/lib': path.resolve(__dirname, 'src/lib'),
+      '@/monitor': path.resolve(__dirname, 'packages/'),
     },
   },
   plugins: [

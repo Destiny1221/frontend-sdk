@@ -13,7 +13,8 @@
     // 用来设置相对应的路径映射，数组中的路径相对应baseUrl的路径
     "paths": {
       "@/*": ["src/*"],
-      "@/lib/*": ["src/lib/*"] // 路径别名设置
+      "@/lib/*": ["src/lib/*"], // 路径别名设置
+      "@monitor/*": ["packages/*/src"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
