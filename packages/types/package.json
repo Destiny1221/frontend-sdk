@@ -14,10 +14,10 @@
   "author": "destiny",
   "license": "ISC",
   "dependencies": {
-    "@monitor/common": "workspace:*"
+    "@monitor/common": "1.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:xy-sea/web-see.git"
+    "url": "git@github.com:Destiny1221/frontend-sdk.git"
   }
 }

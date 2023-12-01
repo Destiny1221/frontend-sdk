@@ -1,11 +1,10 @@
 {
-  "name": "sdk",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.dev.js",
     "build": "node scripts/build.js",
+    "version": "node scripts/version.js",
     "commit": "git add . && cz",
     "format:fix": "prettier --write src/**/*",
     "lint": "npx eslint --ext .js,.jsx,.ts src",
@@ -14,7 +13,7 @@
     "prepare": "husky install"
   },
   "keywords": [],
-  "author": "",
+  "author": "destiny",
   "license": "ISC",
   "lint-staged": {
     "*.{less,scss,css,json,md}": [

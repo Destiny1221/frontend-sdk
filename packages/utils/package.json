@@ -16,12 +16,12 @@
   "dependencies": {
     "@types/ua-parser-js": "^0.7.36",
     "ua-parser-js": "1.0.32",
-    "@monitor/common": "workspace:*",
-    "@monitor/core": "workspace:*",
-    "@monitor/types": "workspace:*"
+    "@monitor/common": "1.0.0",
+    "@monitor/core": "1.0.0",
+    "@monitor/types": "1.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:xy-sea/web-see.git"
+    "url": "git@github.com:Destiny1221/frontend-sdk.git"
   }
 }
