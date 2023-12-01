@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "commit": "cz",
+    "commit": "git add . && cz",
     "format:fix": "prettier --write src/**/*",
     "lint": "npx eslint --ext .js,.jsx,.ts src",
     "lint:fix": "npx eslint --fix --ext .js,.jsx,.ts src",
@@ -44,6 +44,7 @@
   "dependencies": {
     "@babel/runtime": "^7.18.9",
     "@babel/runtime-corejs3": "^7.18.9",
+    "@types/node": "^20.10.0",
     "axios": "^0.27.2",
     "typescript": "^4.7.4",
     "web-vitals": "^3.0.0",

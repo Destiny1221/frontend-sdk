@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-08-30 11:12:10
  * @Description:
  */
-import { Monitor } from '../packages/core/src/index';
+import Monitor from '../packages/web/src/index';
 import { getList } from './request';
 
 var tag = 'console开始展开';
@@ -15,7 +15,15 @@ console.log(1);
 console.log(1);
 console.groupEnd();
 
-new Monitor();
+Monitor.init({
+  apikey: 'test',
+  dsn: 'http://127.0.0.1',
+  debug: true,
+  maxBreadcrumbs: 2,
+  handleHttpResponse: (data) => {
+    return data?.code === 200;
+  },
+});
 document.getElementById('errorBtn').onclick = () => {
   const script = document.createElement('script');
   script.type = 'text/javascript';

@@ -3,10 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "module": "dist/index.esm.js",
+  "publishConfig": {
+    "main": "dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "author": "destiny",
+  "license": "ISC",
+  "dependencies": {
+    "@types/ua-parser-js": "^0.7.36",
+    "ua-parser-js": "1.0.32",
+    "@monitor/common": "workspace:*",
+    "@monitor/core": "workspace:*",
+    "@monitor/types": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:xy-sea/web-see.git"
+  }
 }

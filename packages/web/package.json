@@ -1,0 +1,18 @@
+{
+  "name": "@monitor/web",
+  "version": "1.0.0",
+  "description": "A SDK library For Monitoring Browser Errors",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "destiny",
+  "license": "ISC",
+  "dependencies": {
+    "@monitor/common": "workspace:^",
+    "@monitor/core": "workspace:^",
+    "@monitor/types": "workspace:^",
+    "@monitor/utils": "workspace:^"
+  }
+}

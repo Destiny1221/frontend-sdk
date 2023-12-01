@@ -27,5 +27,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'prefer-rest-params': 'off',
     '@typescript-eslint/no-this-alias': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 };

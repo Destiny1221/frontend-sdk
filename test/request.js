@@ -7,7 +7,7 @@
  */
 import axios from 'axios';
 
-const baseURL = 'http://123.60.62.98:8080/baoli';
+const baseURL = 'https://zht-int.pinlandata.com';
 class Request {
   // axios 实例
   instance;
@@ -55,4 +55,4 @@ class Request {
 
 const request = new Request();
 
-export const getList = () => request.get('/commonInfo/projectInfoEnum/list');
+export const getList = () => request.get('/drawing_show/get_version?name=jack');
